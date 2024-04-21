@@ -39,7 +39,13 @@ class Vue implements Recipes
     {
         $this->command->info('[Finish Deploy] Executing now...');
 
-        $shell = !empty($this->config['finish_deploy']) ? $this->config['finish_deploy'] : "export NODE_OPTIONS=--max-old-space-size=4096; yarn install; yarn build; mkdir -p public_html; cp -r dist/. public_html;";
+        !empty($this->config['nvm_use']) ?
+            Process::path($this->config['path'])->run(". \$HOME/.nvm/nvm.sh; nvm install {$this->config['nvm_use']}; nvm use {$this->config['nvm_use']};", function (string $type, string $output)
+            {
+                echo $output;
+            })->throw() : null;
+
+        $shell = !empty($this->config['finish_deploy']) ? $this->config['finish_deploy'] : "export NODE_OPTIONS=--max-old-space-size=4096; npm install; npm run build; mkdir -p public_html; cp -r dist/. public_html;";
 
         Process::path($this->config['path'])->run($shell, function (string $type, string $output)
         {
