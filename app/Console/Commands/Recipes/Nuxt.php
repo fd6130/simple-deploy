@@ -45,7 +45,7 @@ class Nuxt implements Recipes
                 echo $output;
             })->throw() : null;
 
-        $shell = !empty($this->config['finish_deploy']) ? $this->config['finish_deploy'] : "export NODE_OPTIONS=--max-old-space-size=4096; npm install; npm run build; mkdir -p public_html; cp -r dist/. public_html;";
+        $shell = !empty($this->config['finish_deploy']) ? $this->config['finish_deploy'] : "export NODE_OPTIONS=--max-old-space-size=4096; npm install; npm run build;";
 
         Process::timeout(180)->path($this->config['path'])->run($shell, function (string $type, string $output)
         {
