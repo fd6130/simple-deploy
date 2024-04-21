@@ -33,7 +33,7 @@ class General implements Recipes
 
         $shell = $this->config['start_deploy'];
 
-        Process::path($this->config['path'])->run($shell, function (string $type, string $output)
+        Process::timeout(180)->path($this->config['path'])->run($shell, function (string $type, string $output)
         {
             echo $output;
         })->throw();
@@ -53,7 +53,7 @@ class General implements Recipes
 
         $shell = $this->config['finish_deploy'];
 
-        Process::path($this->config['path'])->run($shell, function (string $type, string $output)
+        Process::timeout(180)->path($this->config['path'])->run($shell, function (string $type, string $output)
         {
             echo $output;
         })->throw();
@@ -67,7 +67,7 @@ class General implements Recipes
 
         $this->command->info('[After Finish Deploy] Executing now...');
 
-        Process::path($this->config['path'])->run($this->config['after_finish_deploy'], function (string $type, string $output)
+        Process::timeout(180)->path($this->config['path'])->run($this->config['after_finish_deploy'], function (string $type, string $output)
         {
             echo $output;
         })->throw();

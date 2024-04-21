@@ -27,7 +27,7 @@ class Laravel implements Recipes
 
         $shell = !empty($this->config['start_deploy']) ? $this->config['start_deploy'] : "git fetch; git checkout {$this->config['branch']}; git pull origin {$this->config['branch']};";
 
-        Process::path($this->config['path'])->run($shell, function (string $type, string $output)
+        Process::timeout(180)->path($this->config['path'])->run($shell, function (string $type, string $output)
         {
             echo $output;
         })->throw();
@@ -41,7 +41,7 @@ class Laravel implements Recipes
 
         $shell = !empty($this->config['finish_deploy']) ? $this->config['finish_deploy'] : "composer install --optimize-autoloader --no-dev; php artisan migrate --force; php artisan optimize:clear; php artisan optimize;";
 
-        Process::path($this->config['path'])->run($shell, function (string $type, string $output)
+        Process::timeout(180)->path($this->config['path'])->run($shell, function (string $type, string $output)
         {
             echo $output;
         })->throw();
@@ -55,7 +55,7 @@ class Laravel implements Recipes
 
         $this->command->info('[After Finish Deploy] Executing now...');
 
-        Process::path($this->config['path'])->run($this->config['after_finish_deploy'], function (string $type, string $output)
+        Process::timeout(180)->path($this->config['path'])->run($this->config['after_finish_deploy'], function (string $type, string $output)
         {
             echo $output;
         })->throw();

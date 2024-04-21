@@ -27,7 +27,7 @@ class Nuxt implements Recipes
 
         $shell = !empty($this->config['start_deploy']) ? $this->config['start_deploy'] : "git fetch; git checkout {$this->config['branch']}; git pull origin {$this->config['branch']};";
 
-        Process::path($this->config['path'])->run($shell, function (string $type, string $output)
+        Process::timeout(180)->path($this->config['path'])->run($shell, function (string $type, string $output)
         {
             echo $output;
         })->throw();
@@ -40,14 +40,14 @@ class Nuxt implements Recipes
         $this->command->info('[Finish Deploy] Executing now...');
 
         !empty($this->config['nvm_use']) ?
-            Process::path($this->config['path'])->run(". \$HOME/.nvm/nvm.sh; nvm install {$this->config['nvm_use']}; nvm use {$this->config['nvm_use']};", function (string $type, string $output)
+            Process::timeout(180)->path($this->config['path'])->run(". \$HOME/.nvm/nvm.sh; nvm install {$this->config['nvm_use']}; nvm use {$this->config['nvm_use']};", function (string $type, string $output)
             {
                 echo $output;
             })->throw() : null;
 
         $shell = !empty($this->config['finish_deploy']) ? $this->config['finish_deploy'] : "export NODE_OPTIONS=--max-old-space-size=4096; npm install; npm run build; mkdir -p public_html; cp -r dist/. public_html;";
 
-        Process::path($this->config['path'])->run($shell, function (string $type, string $output)
+        Process::timeout(180)->path($this->config['path'])->run($shell, function (string $type, string $output)
         {
             echo $output;
         })->throw();
@@ -61,7 +61,7 @@ class Nuxt implements Recipes
 
         $this->command->info('[After Finish Deploy] Executing now...');
 
-        Process::path($this->config['path'])->run($this->config['after_finish_deploy'], function (string $type, string $output)
+        Process::timeout(180)->path($this->config['path'])->run($this->config['after_finish_deploy'], function (string $type, string $output)
         {
             echo $output;
         })->throw();
