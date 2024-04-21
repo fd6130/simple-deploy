@@ -53,7 +53,7 @@ class Nuxt implements Recipes
         })->throw();
 
         !empty($this->config['pm2_reload']) ?
-            Process::timeout(180)->path($this->config['path'])->run("npm install pm2 -g; pm2 reload {$this->config['pm2_reload']};", function (string $type, string $output)
+            Process::timeout(180)->path($this->config['path'])->run("npm install pm2 -g; pm2 reload '{$this->config['pm2_reload']}';", function (string $type, string $output)
             {
                 echo $output;
             })->throw() : null;
