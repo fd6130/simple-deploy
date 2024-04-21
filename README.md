@@ -21,7 +21,7 @@ simple-deploy is a very simple deployment script written in Laravel Console.
 
 ## Configuration
 
-Put all your project you wish to deploy in `app/project.yaml`.
+Put all your project you wish to deploy in `project.yaml` at your project root folder.
 
 > Key in your shell command to 'start_deploy' and 'finish_deploy'
 
