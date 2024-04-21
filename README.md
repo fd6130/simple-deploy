@@ -46,3 +46,7 @@ put_your_project_name_here:
     finish_deploy: ""
     after_finish_deploy: ""
 ```
+
+## Usage
+
+`php artisan app:deploy`
