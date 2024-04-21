@@ -21,9 +21,27 @@ simple-deploy is a very simple deployment script written in Laravel Console.
 
 ## Configuration
 
-Put all your project you wish to deploy in `project.yaml` at your project root folder.
+Full config:
 
-> Key in your shell command to 'start_deploy' and 'finish_deploy'
+```yaml
+put_your_project_name_here:
+    # (optional) laravel, vue, nuxt
+    recipe:
+    # your project path
+    path:
+    # github branch
+    branch:
+    # override the command in recipe (if using recipe).
+    start_deploy:
+    finish_deploy:
+    after_finish_deploy:
+    # switch to specific node version (ex: 20) using nvm
+    nvm_use:
+    # pm2 instance name
+    pm2_reload:
+```
+
+Put all your project you wish to deploy under `project.yaml` in this repository root folder.
 
 ```yaml
 project1:
@@ -39,22 +57,44 @@ project2:
     finish_deploy: ""
 ```
 
-Full config:
-
-> Or, you can use our recipe for quick start
-
-```yaml
-put_your_project_name_here:
-    recipe: "laravel|vue|nuxt"
-    path: ""
-    branch: ""
-    start_deploy: ""
-    finish_deploy: ""
-    after_finish_deploy: ""
-```
-
 ## Usage
 
 Clone this repository into your server and then execute this command in the repository:
 
 `php artisan app:deploy`
+
+> You may use our recipe for quick start to do some deployment.
+
+### Laravel
+
+```yaml
+put_your_project_name_here:
+    recipe: "laravel"
+    path:
+    branch:
+```
+
+### Vue
+
+> Your vue build files will be copied to '<your project folder>/public_html'.
+
+```yaml
+put_your_project_name_here:
+    recipe: "vue"
+    path:
+    branch:
+    nvm_use:
+```
+
+### Nuxt
+
+> We will assume that your nuxt instance is already setup in PM2.
+
+```yaml
+put_your_project_name_here:
+    recipe: "nuxt"
+    path:
+    branch:
+    nvm_use:
+    pm2_reload:
+```
