@@ -35,7 +35,7 @@ class Deploy extends Command
      */
     public function handle()
     {
-        $projects = collect(Yaml::parseFile(app_path('project.yaml')));
+        $projects = collect(Yaml::parseFile(base_path('project.yaml')));
 
         $choice = select(
             label: 'Which project do you want to deploy?',
