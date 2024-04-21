@@ -49,4 +49,6 @@ put_your_project_name_here:
 
 ## Usage
 
+Clone this repository into your server and then execute this command in the repository:
+
 `php artisan app:deploy`
