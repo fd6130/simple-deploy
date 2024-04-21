@@ -45,18 +45,18 @@ class Nuxt implements Recipes
                 echo $output;
             })->throw() : null;
 
-        !empty($this->config['pm2_reload']) ?
-            Process::timeout(180)->path($this->config['path'])->run("npm install pm2 -g; pm2 reload {$this->config['pm2_reload']};", function (string $type, string $output)
-            {
-                echo $output;
-            })->throw() : null;
-
         $shell = !empty($this->config['finish_deploy']) ? $this->config['finish_deploy'] : "export NODE_OPTIONS=--max-old-space-size=4096; npm install; npm run build;";
 
         Process::timeout(180)->path($this->config['path'])->run($shell, function (string $type, string $output)
         {
             echo $output;
         })->throw();
+
+        !empty($this->config['pm2_reload']) ?
+            Process::timeout(180)->path($this->config['path'])->run("npm install pm2 -g; pm2 reload {$this->config['pm2_reload']};", function (string $type, string $output)
+            {
+                echo $output;
+            })->throw() : null;
 
         return true;
     }
