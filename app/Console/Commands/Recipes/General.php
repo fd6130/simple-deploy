@@ -5,7 +5,7 @@ namespace App\Console\Commands\Recipes;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Process;
 
-class Laravel implements Recipes
+class General implements Recipes
 {
     public function __construct(private array $config, private Command $command)
     {
@@ -25,7 +25,13 @@ class Laravel implements Recipes
     {
         $this->command->info('[Start Deploy] Executing now...');
 
-        $shell = !empty($this->config['start_deploy']) ? $this->config['start_deploy'] : "git fetch; git checkout {$this->config['branch']}; git pull origin {$this->config['branch']};";
+        if (empty($this->config['start_deploy']))
+        {
+            $this->command->error('Command is empty.');
+            return false;
+        }
+
+        $shell = $this->config['start_deploy'];
 
         Process::path($this->config['path'])->run($shell, function (string $type, string $output)
         {
@@ -39,7 +45,13 @@ class Laravel implements Recipes
     {
         $this->command->info('[Finish Deploy] Executing now...');
 
-        $shell = !empty($this->config['finish_deploy']) ? $this->config['finish_deploy'] : "composer install --optimize-autoloader --no-dev; php artisan migrate --force; php artisan optimize:clear; php artisan optimize;";
+        if (empty($this->config['finish_deploy']))
+        {
+            $this->command->error('Command is empty.');
+            return false;
+        }
+
+        $shell = $this->config['finish_deploy'];
 
         Process::path($this->config['path'])->run($shell, function (string $type, string $output)
         {

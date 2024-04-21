@@ -2,6 +2,7 @@
 
 namespace App\Console\Commands;
 
+use App\Console\Commands\Recipes\General;
 use App\Console\Commands\Recipes\Laravel;
 use App\Console\Commands\Recipes\Nuxt;
 use App\Console\Commands\Recipes\Vue;
@@ -51,12 +52,19 @@ class Deploy extends Command
 
         $project = $projects->get($choice);
 
-        match ($project['type'])
+        if (!empty($project['recipe']))
         {
-            'laravel' => Laravel::deploy($project, $this),
-            'vue' => Vue::deploy($project, $this),
-            'nuxt' => Nuxt::deploy($project, $this),
-            default => $this->error("Unknown project type '{$project['type']}'.")
-        };
+            match ($project['recipe'])
+            {
+                'laravel' => Laravel::deploy($project, $this),
+                'vue' => Vue::deploy($project, $this),
+                'nuxt' => Nuxt::deploy($project, $this),
+                default => $this->error("Unknown project type '{$project['type']}'.")
+            };
+        }
+        else
+        {
+            General::deploy($project, $this);
+        }
     }
 }

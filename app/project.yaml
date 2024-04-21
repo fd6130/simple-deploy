@@ -1,10 +1,10 @@
 sbp2u.com:
-  type: 'laravel'
+  recipe: 'laravel'
   path: '/home/vui/Documents/Projects/sbp/sbp-backend'
   branch: 'main'
 
 vendor.sbp2u.com:
-  type: 'vue'
+  recipe: 'vue'
   path: '/home/vui/Documents/Projects/sbp/earnlah-vendor'
   branch: 'main'
   after_finish_deploy: 'pwd;'

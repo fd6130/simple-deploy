@@ -23,23 +23,29 @@ simple-deploy is a very simple deployment script written in Laravel Console.
 
 Put all your project you wish to deploy in `app/project.yaml`.
 
+> Key in your shell command to 'start_deploy' and 'finish_deploy'
+
 ```yaml
 project1:
-    type: "laravel|vue|nuxt"
     path: ""
     branch: ""
+    start_deploy: ""
+    finish_deploy: ""
 
 project2:
-    type: "laravel|vue|nuxt"
     path: ""
     branch: ""
+    start_deploy: ""
+    finish_deploy: ""
 ```
 
 Full config:
 
+> Or, you can use our recipe for quick start
+
 ```yaml
 put_your_project_name_here:
-    type: "laravel|vue|nuxt"
+    recipe: "laravel|vue|nuxt"
     path: ""
     branch: ""
     start_deploy: ""

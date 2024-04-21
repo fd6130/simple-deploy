@@ -14,14 +14,14 @@ class Nuxt implements Recipes
     public static function deploy(array $config, Command $command)
     {
         $instance = new self($config, $command);
-        $instance->startDeploy();
-        $instance->finishDeploy();
-        $instance->afterFinishDeploy();
+        $phase1 = $instance->startDeploy();
+        $phase2 = $phase1 ? $instance->finishDeploy() : false;
+        $phase3 = $phase2 ? $instance->afterFinishDeploy() : false;
 
         $command->info('Deployment is done.');
     }
 
-    public function startDeploy()
+    public function startDeploy(): bool
     {
         $this->command->info('[Start Deploy] Executing now...');
 
@@ -31,9 +31,11 @@ class Nuxt implements Recipes
         {
             echo $output;
         })->throw();
+
+        return true;
     }
 
-    public function finishDeploy()
+    public function finishDeploy(): bool
     {
         $this->command->info('[Finish Deploy] Executing now...');
 
@@ -43,11 +45,13 @@ class Nuxt implements Recipes
         {
             echo $output;
         })->throw();
+
+        return true;
     }
 
-    public function afterFinishDeploy()
+    public function afterFinishDeploy(): bool
     {
-        if (empty($this->config['after_finish_deploy'])) return;
+        if (empty($this->config['after_finish_deploy'])) return false;
 
         $this->command->info('[After Finish Deploy] Executing now...');
 
@@ -55,5 +59,7 @@ class Nuxt implements Recipes
         {
             echo $output;
         })->throw();
+
+        return true;
     }
 }

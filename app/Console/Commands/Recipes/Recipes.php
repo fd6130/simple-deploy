@@ -9,25 +9,25 @@ interface Recipes
      *
      * Such as git pull latest branch, backup database, etc.
      *
-     * @return void
+     * @return bool
      */
-    public function startDeploy();
+    public function startDeploy(): bool;
 
     /**
      * Perform the task when finish deploying.
      *
      * Such as composer install, npm run build, yarn build, clear cache, etc.
      *
-     * @return void
+     * @return bool
      */
-    public function finishDeploy();
+    public function finishDeploy(): bool;
 
     /**
      * Perform the task after finish deploying.
      *
      * Such as laravel command, restart laravel worker, clear cache, etc.
      *
-     * @return void
+     * @return bool
      */
-    public function afterFinishDeploy();
+    public function afterFinishDeploy(): bool;
 }
