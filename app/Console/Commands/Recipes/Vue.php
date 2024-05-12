@@ -40,7 +40,7 @@ class Vue implements Recipes
         $this->command->info('[Finish Deploy] Executing now...');
 
         !empty($this->config['nvm_use']) ?
-            Process::timeout(180)->path($this->config['path'])->run(". \$HOME/.nvm/nvm.sh; nvm install {$this->config['nvm_use']}; nvm use {$this->config['nvm_use']};", function (string $type, string $output)
+            Process::timeout(180)->path($this->config['path'])->run(". \$HOME/.nvm/nvm.sh; nvm use {$this->config['nvm_use']};", function (string $type, string $output)
             {
                 echo $output;
             })->throw() : null;

@@ -16,7 +16,7 @@ simple-deploy is a very simple deployment script written in Laravel Console.
 -   Some knowledge of hosting a project in server.
 -   Git
 -   NodeJS
--   Yarn
+-   nvm (Node Version Manager)
 -   PM2
 
 ## Configuration
