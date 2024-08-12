@@ -25,7 +25,7 @@ class Nuxt implements Recipes
     {
         $this->command->info('[Start Deploy] Executing now...');
 
-        $shell = !empty($this->config['start_deploy']) ? $this->config['start_deploy'] : "it reset --hard; git fetch; git checkout {$this->config['branch']}; git pull origin {$this->config['branch']};";
+        $shell = !empty($this->config['start_deploy']) ? $this->config['start_deploy'] : "git reset --hard; git fetch; git checkout {$this->config['branch']}; git pull origin {$this->config['branch']};";
 
         Process::timeout(180)->path($this->config['path'])->run($shell, function (string $type, string $output)
         {
