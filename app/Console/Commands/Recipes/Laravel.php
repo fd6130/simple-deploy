@@ -39,7 +39,7 @@ class Laravel implements Recipes
     {
         $this->command->info('[Finish Deploy] Executing now...');
 
-        $shell = !empty($this->config['finish_deploy']) ? $this->config['finish_deploy'] : "composer install --optimize-autoloader --no-dev; php artisan migrate --force; php artisan optimize:clear; php artisan optimize; chmod -R 775 storage; chmod -R 775 bootstrap/cache;";
+        $shell = !empty($this->config['finish_deploy']) ? $this->config['finish_deploy'] : "composer install --optimize-autoloader --no-dev; php artisan migrate --force; php artisan optimize:clear; php artisan optimize; chown -R \$USER:www-data storage; chown -R \$USER:www-data bootstrap/cache; chmod -R 775 storage; chmod -R 775 bootstrap/cache;";
 
         Process::timeout(180)->path($this->config['path'])->run($shell, function (string $type, string $output)
         {
