@@ -10,7 +10,7 @@ simple-deploy is a very simple deployment script written in Laravel Console.
 
 > We will assume that you already know how to setup a hosting environment and host your project in server.
 
--   PHP 8.2
+-   PHP
 -   DigitalOcean or AWS EC2 Linux OS (ex: ubuntu).
 -   Some knowledge of Linux terminal command and usage.
 -   Some knowledge of hosting a project in server.
@@ -31,6 +31,8 @@ put_your_project_name_here:
     path:
     # github branch
     branch:
+    # for composer (local, prod)
+    env:
     # override the command in recipe (if using recipe).
     start_deploy:
     finish_deploy:
@@ -72,6 +74,7 @@ put_your_project_name_here:
     recipe: "laravel"
     path:
     branch:
+    env: local
 ```
 
 ### Vue
