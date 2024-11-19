@@ -69,12 +69,15 @@ Clone this repository into your server and then execute this command in the repo
 
 ### Laravel
 
+For php opcache tool, visit https://github.com/gordalina/cachetool
+
 ```yaml
 put_your_project_name_here:
     recipe: "laravel"
     path:
     branch:
     env: local
+    opcache_tool_path:
 ```
 
 ### Vue

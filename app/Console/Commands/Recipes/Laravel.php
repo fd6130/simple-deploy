@@ -40,7 +40,9 @@ class Laravel implements Recipes
         $this->command->info('[Finish Deploy] Executing now...');
 
         $composer = ($this->config['env'] ?? 'local') == 'local' ? "composer install" : "composer install --optimize-autoloader --no-dev";
-        $shell = !empty($this->config['finish_deploy']) ? $this->config['finish_deploy'] : "{$composer}; php artisan migrate --force; sudo chown -R www-data:www-data storage; sudo chown -R www-data:www-data bootstrap; sudo chmod -R 775 storage/; sudo chmod -R 775 bootstrap/; php artisan cache:clear; php artisan optimize:clear;";
+        $opcacheTool = data_get($this->config, 'opcache_tool_path') ? 'php ' . data_get($this->config, 'opcache_tool_path') . 'opcache:' : '';
+
+        $shell = !empty($this->config['finish_deploy']) ? $this->config['finish_deploy'] : "{$composer}; php artisan migrate --force; sudo chown -R www-data:www-data storage; sudo chown -R www-data:www-data bootstrap; sudo chmod -R 775 storage/; sudo chmod -R 775 bootstrap/; php artisan cache:clear; php artisan optimize:clear; {$opcacheTool};";
 
         Process::timeout(180)->path($this->config['path'])->run($shell, function (string $type, string $output)
         {
